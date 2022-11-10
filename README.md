@@ -48,7 +48,7 @@ jobs:
 #### Main Configurations
 
 | Name                | Required | Default    | Description                                                                                                                                                                                                                                                                |
-| ------------------- | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------------------|----------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `github-token`      | `true`   | None       | This can be set to the following:<br/>- `${{ github.token }}`<br/>- `${{ secrets.GITHUB_TOKEN }}`<br/>- `${{ secrets.CUSTOM_TOKEN }}`                                                                                                                                      |
 | `webhook-uri`       | `true`   | None       | The value of `MS_TEAMS_WEBHOOK_URI`                                                                                                                                                                                                                                        |
 | `card-layout-start` | `false`  | `complete` | Card layout on **_start_** (i.e. `complete`, `cozy`, `compact`)                                                                                                                                                                                                            |
@@ -60,7 +60,7 @@ jobs:
 #### Cozy and Complete Layout-specific Configurations
 
 | Name                       | Required | Default                      | Description                                                                                                             |
-| -------------------------- | -------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+|----------------------------|----------|------------------------------|-------------------------------------------------------------------------------------------------------------------------|
 | `environment`              | `false`  | None                         | Name of the environment, e.g. `development`, `production` (won't be included in the card if none)                       |
 | `timezone`                 | `false`  | `"UTC"`                      | A [valid database timezone name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g. `Australia/Sydney` |
 | `enable-view-status`       | `false`  | `true`                       | Enable an action to view the deployment status                                                                          |
@@ -72,7 +72,7 @@ jobs:
 #### Complete Layout-specific Configurations
 
 | Name               | Required | Default | Description                                                                                                                                         |
-| ------------------ | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+|--------------------|----------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `custom-facts`     | `false`  | `null`  | YAML-parseable multiline string defining a list of objects with `name` and `value` to display alongside existing facts. Only for `complete` layout. |
 | `include-files`    | `false`  | `true`  | Include the list of files when `layout` is set to `complete`                                                                                        |
 | `allowed-file-len` | `false`  | `7`     | Allowed number of changed files to display, when `include-files` is set to `true`                                                                   |
