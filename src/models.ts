@@ -1,7 +1,7 @@
 export class PotentialAction {
-  "@context": string = "http://schema.org";
-  "@type": string = "ViewAction";
-  name: string = "";
+  '@context' = 'http://schema.org';
+  '@type' = 'ViewAction';
+  name = '';
   target: string[] = [];
 
   constructor(name: string, target: string[]) {
@@ -21,17 +21,17 @@ export class Fact {
 }
 
 export class CardSection {
-  activityTitle: string = "";
-  activitySubtitle?: string = "";
-  activityImage: string = "";
+  activityTitle = '';
+  activitySubtitle?: string = '';
+  activityImage = '';
   activityText?: string;
   facts?: Fact[];
   potentialAction?: PotentialAction[];
 }
 
 export class WebhookBody {
-  summary: string = "Github Actions CI";
+  summary = 'Github Actions CI';
   text?: string;
-  themeColor: string = "FFF49C";
+  themeColor = 'FFF49C';
   sections: CardSection[] = [];
 }
