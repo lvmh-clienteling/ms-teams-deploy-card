@@ -1,24 +1,15 @@
-import { Octokit } from "@octokit/rest";
-import moment from "moment-timezone";
-import yaml from "yaml";
-import { getInput } from "@actions/core";
+import { getInput } from '@actions/core';
 
-import { WebhookBody } from "../models";
-import { CONCLUSION_THEMES } from "../constants";
-import { renderActions } from "../utils";
+import { DateTime } from 'luxon';
+import { CONCLUSION_THEMES } from '../constants';
+import { WebhookBody } from '../models';
+import { renderActions } from '../utils';
 
-export const OCTOCAT_LOGO_URL =
-  "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png";
+export const OCTOCAT_LOGO_URL = 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png';
 
-export function formatCozyLayout(
-  commit: Octokit.Response<Octokit.ReposGetCommitResponse>,
-  conclusion: string,
-  elapsedSeconds?: number
-) {
-  const timezone = getInput("timezone") || "UTC";
-  const nowFmt = moment()
-    .tz(timezone)
-    .format("dddd, MMMM Do YYYY, h:mm:ss a z");
+export function formatCozyLayout(commit: any, conclusion: string, elapsedSeconds?: number) {
+  const timezone = getInput('timezone') || 'UTC';
+  const nowFmt = DateTime.local().setZone(timezone).toFormat('dddd, MMMM Do YYYY, h:mm:ss a z');
   const webhookBody = new WebhookBody();
   const repoUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}`;
   const shortSha = process.env.GITHUB_SHA?.substr(0, 7);
@@ -30,22 +21,17 @@ export function formatCozyLayout(
   }
 
   // Set environment name
-  const environment = getInput("environment");
-  if (environment !== "") {
+  const environment = getInput('environment');
+  if (environment !== '') {
     labels += ` \`ENV:${environment.toUpperCase()}\``;
   }
 
   // Set themeColor
-  webhookBody.themeColor = CONCLUSION_THEMES[conclusion] || "957DAD";
+  webhookBody.themeColor = CONCLUSION_THEMES[conclusion] || '957DAD';
 
   // Get potential actions
-  const actions = renderActions(
-    `${repoUrl}/actions/runs/${process.env.GITHUB_RUN_ID}`,
-    commit.data.html_url
-  );
-  const actionsConcat = actions
-    .map((action) => ` &nbsp; &nbsp; [${action.name}](${action.target})`)
-    .join("");
+  const actions = renderActions(`${repoUrl}/actions/runs/${process.env.GITHUB_RUN_ID}`, commit.data.html_url);
+  const actionsConcat = actions.map((action) => ` &nbsp; &nbsp; [${action.name}](${action.target})`).join('');
 
   const author = commit.data.author;
   // Set sections
@@ -53,9 +39,7 @@ export function formatCozyLayout(
     {
       activityTitle: `**CI #${process.env.GITHUB_RUN_NUMBER} (commit ${shortSha})** on [${process.env.GITHUB_REPOSITORY}](${repoUrl})`,
       activityImage: author?.avatar_url || OCTOCAT_LOGO_URL,
-      activitySubtitle: author
-        ? `by [@${author.login}](${author.html_url}) on ${nowFmt}`
-        : nowFmt,
+      activitySubtitle: author ? `by [@${author.login}](${author.html_url}) on ${nowFmt}` : nowFmt,
       activityText: `${labels}${actionsConcat}`,
     },
   ];

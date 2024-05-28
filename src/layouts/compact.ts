@@ -1,13 +1,8 @@
-import { Octokit } from "@octokit/rest";
-import { WebhookBody } from "../models";
-import { getInput } from "@actions/core";
-import { CONCLUSION_THEMES } from "../constants";
+import { getInput } from '@actions/core';
+import { CONCLUSION_THEMES } from '../constants';
+import { WebhookBody } from '../models';
 
-export function formatCompactLayout(
-  commit: Octokit.Response<Octokit.ReposGetCommitResponse>,
-  conclusion: string,
-  elapsedSeconds?: number
-) {
+export function formatCompactLayout(commit: any, conclusion: string, elapsedSeconds?: number) {
   const author = commit.data.author;
   const repoUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}`;
   const shortSha = process.env.GITHUB_SHA?.substr(0, 7);
@@ -21,13 +16,13 @@ export function formatCompactLayout(
   }
 
   // Set environment name
-  const environment = getInput("environment");
-  if (environment !== "") {
+  const environment = getInput('environment');
+  if (environment !== '') {
     labels += ` \`ENV:${environment.toUpperCase()}\``;
   }
 
   // Set themeColor
-  webhookBody.themeColor = CONCLUSION_THEMES[conclusion] || "957DAD";
+  webhookBody.themeColor = CONCLUSION_THEMES[conclusion] || '957DAD';
 
   webhookBody.text =
     `${labels} &nbsp; CI [#${process.env.GITHUB_RUN_NUMBER}](${runLink}) ` +

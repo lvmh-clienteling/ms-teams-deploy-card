@@ -4,23 +4,36 @@
   "description": "Microsoft Teams Deploy Card",
   "main": "index.ts",
   "repository": "https://github.com/toko-bifrost/ms-teams-deploy-card",
-  "author": "Aldwyn Cabarrubias",
+  "author": "LVMH Core Team",
   "license": "MIT",
   "private": false,
   "dependencies": {
     "@actions/core": "^1.2.2",
-    "@octokit/rest": "^16.43.1",
-    "moment-timezone": "^0.5.27",
+    "@octokit/rest": "^20.1.1",
+    "luxon": "^3.4.4",
     "node-fetch": "^2.6.0",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "@types/moment-timezone": "^0.5.12",
+    "@types/node": "^20.12.12",
     "@types/node-fetch": "^2.5.4",
-    "@zeit/ncc": "^0.21.0",
-    "typescript": "^3.7.5"
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "@vercel/ncc": "^0.38.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "prettier": "^3.2.5",
+    "typescript": "^4.9.5"
   },
   "scripts": {
-    "ncc": "ncc build src/index.ts -m -o dist/main && ncc build src/post.ts -m -o dist/post"
+    "ncc": "ncc build src/index.ts -m -o dist/main && ncc build src/post.ts -m -o dist/post",
+    "format": "prettier --write \"{src,apps,libs,test}/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:fix": "npm run format && eslint --fix \"{src,apps,libs,test}/**/*.ts\""
   }
 }
